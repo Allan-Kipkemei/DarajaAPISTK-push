@@ -37,25 +37,28 @@ function PayPage() {
         initiateStkPush(details.phone, details.amount);
       })
       .catch((error) => {
-        console.error(error.message);
+        console.log(error.message);
         // Handle the error
       });
   };
 
-  const initiateStkPush = (phone, amount) => {
-    axios
-      .get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`)
-      .then((response) => {
-        console.log(response.data);
+  const initiateStkPush = async (phone, amount) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`);
 
-        // Handle the response from STK push
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-      });
+      // Check the HTTP status code for success (e.g., 200).
+      if (response.status === 200) {
+        console.log('STK push response:', response.data);
+        // Handle the response from STK push here.
+      } else {
+        console.error(`STK push failed with status code ${response.status}`);
+        // Handle the error appropriately.
+      }
+    } catch (error) {
+      console.error('An error occurred while making the STK push request:', error);
+      // Handle the error appropriately.
+    }
   };
-
   return (
     <div className="card p-4 mb-3">
       <h2 className="text-center">Lipa na M-Pesa (STK Push)</h2>
