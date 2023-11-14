@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const cors = require('cors'); // Add this line
 const User = require('./model');
+
+require('dotenv').config()
 const { connectToDatabase } = require('./db');
 
 
-const port = 8000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,12 +50,14 @@ app.get("/access_token", async (req, res) => {
         res.status(500).send(`❌ Error: ${error.message}`);
     }
 });
+
+
 app.get("/stkpush", async (req, res) => {
     try {
-        const phoneNumber = req.query.phoneNumber;
-        const amount = req.query.amount;
+        const phone_number = req.query.phoneNumber;
+        const ksh_amount = req.query.amount;
         const accessToken = await getAccessToken();
-
+        console.log(accessToken);
         const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
         const auth = `Bearer ${accessToken}`;
         const timestamp = moment().format("YYYYMMDDHHmmss");
@@ -61,26 +65,32 @@ app.get("/stkpush", async (req, res) => {
             "174379" + "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" + timestamp
         ).toString("base64");
 
-        const response = await axios.post(url, {
+        axios.post(url, {
             BusinessShortCode: "174379",
             Password: password,
             Timestamp: timestamp,
             TransactionType: "CustomerPayBillOnline",
-            Amount: amount,
-            PartyA: "254710251692",
+            Amount: ksh_amount,
+            PartyA: phone_number,
             PartyB: "174379",
-            PhoneNumber: phoneNumber,
+            PhoneNumber: phone_number,
             CallBackURL: "https://mydomain.com/path",
             AccountReference: "Alus Mabele",
             TransactionDesc: "Mpesa Daraja API stk push test",
+
+
         }, {
             headers: { Authorization: auth },
         });
 
+
         res.send("😀 Request is successfully done ✔✔. Please enter MPESA pin to complete the transaction");
     } catch (error) {
-        console.error(error.message);
+        console.error('Something went wrong.....'
+            , error.message);
         res.status(500).send("❌ Request failed");
+
+
     }
 });
 app.post('/mpesa/callback', async (req, res) => {
@@ -96,7 +106,7 @@ app.post('/mpesa/callback', async (req, res) => {
         console.error('❌ Error in processing M-Pesa callback:', error);
         res.status(500).send('❌ Internal Server Error. Contact support.');
     }
-});
+})
 
 app.post("/UserData", async (req, res) => {
     try {
