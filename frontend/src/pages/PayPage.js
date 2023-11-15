@@ -69,7 +69,7 @@ function PayPage() {
 
   return (
     <div className="card p-4 mb-3">
-      <h2 className="text-center">Give it a try</h2>
+      <h2 className="text-center">Give it a tryv</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
