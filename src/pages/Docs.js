@@ -3,9 +3,9 @@ import React from "react";
 function Docs() {
   return (
     <div className="p-3">
-      <h3>DOCUMENTATION</h3>
+      <h3>DOCUMENTATION <span>OF</span></h3>
       <p className="text text-primary fs-4 fw-normal">
-        REACT MPESA INTERGRATION
+        REACT MPESA INTERGRATION by:
       </p>
       <h4 className="text">
         <em>Allan Kiplagat</em>
@@ -38,6 +38,8 @@ function Docs() {
       </span>
       <p className="text fs-4 fw-normal">Need Help?</p>
       <p className="text fs-5 fw-light">Reach Out: 0710251692</p>
+      <p className="text fs-5 fw-light">Github repo: <a href="https://github.com/Allan-Kipkemei/DarajaAPISTK-push">GitHub repo</a></p>
+
     </div>
   );
 }

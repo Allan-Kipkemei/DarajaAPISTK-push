@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PayPage() {
   const [details, setDetails] = useState({
@@ -15,17 +17,21 @@ function PayPage() {
     e.preventDefault();
 
     // Validation
+
     if (!details.amount || !details.phone) {
       return alert("Please fill in all fields.");
     }
     if (details.amount < 1) {
       return alert("Please enter a valid amount.");
     }
-    if (details.phone.length !== 10) {
-      return alert("Invalid phone number ");
+    if (details.phone.length !== 12) {
+      return alert("Invalid phone number. Phone number should be 12 characters long.");
     }
-    if (details.phone.substring(0, 2) !== "07" && details.phone.substring(0, 2) !== "01") {
-      return alert("Valid number should start with 07 or 01");
+    if (details.phone.substring(0, 3) !== "254") {
+      return alert("Valid number should start with '254'.");
+    }
+    if (details.phone.substring(3, 5) !== "70" && details.phone.substring(3, 5) !== "71") {
+      return alert("Valid number should start with '70' or '71' after the country code.");
     }
 
     // Make a post request to save user data
@@ -50,6 +56,7 @@ function PayPage() {
       if (response.status === 200) {
         console.log('STK push response:', response.data);
         // Handle the response from STK push here.
+        toast.success('STK push has been sent to your phone');
       } else {
         console.error(`STK push failed with status code ${response.status}`);
         // Handle the error appropriately.
@@ -59,9 +66,10 @@ function PayPage() {
       // Handle the error appropriately.
     }
   };
+
   return (
     <div className="card p-4 mb-3">
-      <h2 className="text-center">Lipa na M-Pesa (STK Push)</h2>
+      <h2 className="text-center">Give it a try</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
@@ -73,7 +81,7 @@ function PayPage() {
             name="phone"
             value={details.phone}
             onChange={handleChange}
-            placeholder="e.g., 0710251692"
+            placeholder="e.g., 254710251692"
           />
         </div>
         <div className="mb-3">
@@ -94,9 +102,10 @@ function PayPage() {
           type="submit"
           className="btn btn-primary btn-block"
         >
-          PAY
+          PAY: KSH {details.amount}/=
         </button>
       </form>
+      <ToastContainer position="top-right" />
     </div>
   );
 }

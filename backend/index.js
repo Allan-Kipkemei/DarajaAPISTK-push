@@ -5,23 +5,20 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const cors = require('cors'); // Add this line
 const User = require('./model');
-
 require('dotenv').config()
 const { connectToDatabase } = require('./db');
-
-
 const port = process.env.PORT;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors()); // Use the cors middleware
-
+//connect to db
 connectToDatabase();
 
-
+//init get access token
 async function getAccessToken() {
-    const consumerKey = 'ApoIAalG8BzrrjVdN5xMfG2kyy4X5Ulh';
-    const consumerSecret = 'YgrEljw7BqMClvcK';
+
+    const consumerKey = process.env.CONSUMER_KEY ;
+    const consumerSecret = process.env.CONSUMER_SECRET ;
 
     const auth = `Basic ${Buffer.from(consumerKey + ":" + consumerSecret).toString("base64")}`;
     const url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
@@ -54,8 +51,8 @@ app.get("/access_token", async (req, res) => {
 
 app.get("/stkpush", async (req, res) => {
     try {
-        const phone_number = req.query.phoneNumber;
-        const ksh_amount = req.query.amount;
+         const phone_number = req.query.phone;
+         const ksh_amount = req.query.amount;
         const accessToken = await getAccessToken();
         console.log(accessToken);
         const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
@@ -71,11 +68,11 @@ app.get("/stkpush", async (req, res) => {
             Timestamp: timestamp,
             TransactionType: "CustomerPayBillOnline",
             Amount: ksh_amount,
-            PartyA: phone_number,
-            PartyB: "174379",
+            PartyA: '600988',
+            PartyB: '174379',
             PhoneNumber: phone_number,
             CallBackURL: "https://mydomain.com/path",
-            AccountReference: "Alus Mabele",
+            AccountReference: "Allan Kiplagat",
             TransactionDesc: "Mpesa Daraja API stk push test",
 
 
