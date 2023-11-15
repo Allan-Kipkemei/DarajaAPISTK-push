@@ -1,15 +1,21 @@
-# Mpesa API intergration on react
+# Mpesa API Integration with React
 
-Intergrate mpesa into your react app
+## Overview
 
-## Available Scripts
+This project demonstrates how to integrate the Mpesa API into a React application. It provides a step-by-step guide on how to set up the project, configure the Mpesa API, and implement payment functionality.
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+Before you begin, ensure you have the following prerequisites:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js installed
+- React installed
+- Familiarity with React and Mpesa API
+- A Safaricom Mpesa developer account
 
-The page will reload when you make changes.
-You may also see any lint errors in the console.
+## Installation
+
+To install the project dependencies, run the following command in the project directory:
+
+```bash
+npm install
