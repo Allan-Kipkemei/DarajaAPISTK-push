@@ -72,7 +72,7 @@ app.get("/stkpush", async (req, res) => {
             PartyB: '174379',
             PhoneNumber: phone_number,
             CallBackURL: "https://mydomain.com/path",
-            AccountReference: "Allan Kiplagat",
+            AccountReference: "Allan ",
             TransactionDesc: "Mpesa Daraja API stk push test",
 
 

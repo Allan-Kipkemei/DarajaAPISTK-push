@@ -36,7 +36,7 @@ function PayPage() {
 
     // Make a post request to save user data
     axios
-      .post("https://stkpush-yryy.onrender.com/UserData", details)
+      .post("https://stkpush-yryy.onrender.com", details)
       .then((response) => {
         console.log(response.data);
 
