@@ -7,8 +7,7 @@
     "start": "nodemon index.js",
     "build": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "render-build":"npm install && npm run build"
+    "eject": "react-scripts eject"
   },
   "author": "allan Kiplagat",
   "license": "ISC",

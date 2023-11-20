@@ -36,7 +36,7 @@ function PayPage() {
 
     // Make a post request to save user data
     axios
-      .post("http://localhost:8000/UserData", details)
+      .post("https://stkpush-yryy.onrender.com/UserData", details)
       .then((response) => {
         console.log(response.data);
 
@@ -50,7 +50,8 @@ function PayPage() {
 
   const initiateStkPush = async (phone, amount) => {
     try {
-      const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`);
+      const baseurl ="https://stkpush-yryy.onrender.com"
+      const response = await axios.get(`${baseurl}/stkpush?phone=${phone}&amount=${amount}`);
 
       // Check the HTTP status code for success (e.g., 200).
       if (response.status === 200) {
