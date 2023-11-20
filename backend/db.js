@@ -9,9 +9,9 @@ async function connectToDatabase() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        console.log('Connected to MongoDB');
+        console.log('Connected to Muongo_DB');
     } catch (error) {
-        console.error('Error when connecting to MongoDB:', error);
+        console.error('Error when connecting to MuongoDB:', error);
     }
 }
 
