@@ -50,8 +50,8 @@ function PayPage() {
 
   const initiateStkPush = async (phone, amount) => {
     try {
-      const baseurl ="https://stkpush-yryy.onrender.com"
-      const response = await axios.get(`${baseurl}/stkpush?phone=${phone}&amount=${amount}`);
+    
+      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}`);
 
       // Check the HTTP status code for success (e.g., 200).
       if (response.status === 200) {
