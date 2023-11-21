@@ -17,73 +17,70 @@ function PayPage() {
     e.preventDefault();
 
     // Validation
-
     if (!details.amount || !details.phone) {
-      return alert("Please fill in all fields.");
+      return toast.error("Please fill in all fields.");
     }
     if (details.amount < 1) {
-      return alert("Please enter a valid amount.");
+      return toast.error("Please enter a valid amount.");
     }
-    if (details.phone.length !== 12) {
-      return alert("Invalid phone number. Phone number should be 12 characters long.");
-    }
-    if (details.phone.substring(0, 3) !== "254") {
-      return alert("Valid number should start with '254'.");
-    }
-    if (details.phone.substring(3, 5) !== "70" && details.phone.substring(3, 5) !== "71") {
-      return alert("Valid number should start with '70' or '71' after the country code.");
+    if (details.phone.length !== 12 || !details.phone.startsWith("254")) {
+      return toast.error("Invalid phone number format.");
     }
 
-    // Make a post request to save user database
-    axios
-      // .post("http://localhost:8000/UserData", details)
-      .post("https://stkpush-yryy.onrender.com/UserData", details, {
+    try {
+      // const response = await axios.post("http://localhost:8000/UserData", details, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+      const response = await axios.post("https://stkpush-yryy.onrender.com/UserData", details, {
         headers: {
           'Content-Type': 'application/json',
-          // Add any other headers as needed
         },
-        })
-      .then((response) => {
-        console.log(response.data);
-
-        initiateStkPush(details.phone, details.amount);
-      })
-      .catch((error) => {
-        console.log(error.message , "namna gani huku");
-        // Handle the error
       });
+
+      console.log(response.data);
+      initiateStkPush(details.phone, details.amount);
+    } catch (error) {
+      console.error('Error saving user data:', error.message);
+      toast.error('An error occurred while processing your request.');
+    }
   };
 
   const initiateStkPush = async (phone, amount) => {
     try {
-    
-      //const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`);
-      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}` ,{
+
+
+      // const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+
+      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}`, {
         headers: {
           'Content-Type': 'application/json',
-      },
-     }); // Updated URL
+        },
+      });
 
-
-      // Check the HTTP status code for success (e.g., 200).
       if (response.status === 200) {
         console.log('STK push response:', response.data);
-        // Handle the response from STK push here.
         toast.success('STK push has been sent to your phone');
       } else {
         console.error(`STK push failed with status code ${response.status}`);
-        // Handle the error appropriately.
+        toast.error('Failed to initiate STK push. Please try again.');
       }
     } catch (error) {
       console.error('An error occurred while making the STK push request:', error);
-      // Handle the error appropriately.
+      toast.error('Failed to initiate STK push. Please try again.');
     }
   };
 
   return (
     <div className="card p-4 mb-3">
       <h2 className="text-center">Give it a try</h2>
-      <form>
+      <form onSubmit={handlePay}>
+        {/* Input components can be extracted for better structure */}
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
             Phone Number:
@@ -110,11 +107,7 @@ function PayPage() {
             placeholder="Enter amount"
           />
         </div>
-        <button
-          onClick={handlePay}
-          type="submit"
-          className="btn btn-primary btn-block"
-        >
+        <button type="submit" className="btn btn-primary btn-block">
           PAY: KSH {details.amount}/=
         </button>
       </form>
