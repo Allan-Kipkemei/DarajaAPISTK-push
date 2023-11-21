@@ -36,7 +36,13 @@ function PayPage() {
 
     // Make a post request to save user database
     axios
-      .post("https://stkpush-yryy.onrender.com", details)
+      // .post("http://localhost:8000/UserData", details)
+      .post("https://stkpush-yryy.onrender.com/UserData", details, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers as needed
+        },
+        })
       .then((response) => {
         console.log(response.data);
 
@@ -51,7 +57,13 @@ function PayPage() {
   const initiateStkPush = async (phone, amount) => {
     try {
     
-      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}`);
+      //const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`);
+      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}` ,{
+        headers: {
+          'Content-Type': 'application/json',
+      },
+     }); // Updated URL
+
 
       // Check the HTTP status code for success (e.g., 200).
       if (response.status === 200) {
