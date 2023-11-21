@@ -34,7 +34,7 @@ function PayPage() {
       return alert("Valid number should start with '70' or '71' after the country code.");
     }
 
-    // Make a post request to save user data
+    // Make a post request to save user database
     axios
       .post("https://stkpush-yryy.onrender.com", details)
       .then((response) => {
@@ -43,7 +43,7 @@ function PayPage() {
         initiateStkPush(details.phone, details.amount);
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error.message , "namna gani huku");
         // Handle the error
       });
   };
@@ -70,7 +70,7 @@ function PayPage() {
 
   return (
     <div className="card p-4 mb-3">
-      <h2 className="text-center">Give it a tryv</h2>
+      <h2 className="text-center">Give it a try</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
