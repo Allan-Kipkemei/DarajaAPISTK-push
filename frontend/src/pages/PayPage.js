@@ -28,16 +28,16 @@ function PayPage() {
     }
 
     try {
-      // const response = await axios.post("http://localhost:8000/UserData", details, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      const response = await axios.post("https://stkpush-yryy.onrender.com/UserData", details, {
+      const response = await axios.post("http://localhost:8000/UserData", details, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      // const response = await axios.post("https://stkpush-yryy.onrender.com/UserData", details, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
 
       console.log(response.data);
       initiateStkPush(details.phone, details.amount);
@@ -51,17 +51,17 @@ function PayPage() {
     try {
 
 
-      // const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-
-      const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}`, {
+      const response = await axios.get(`http://localhost:8000/stkpush?phone=${phone}&amount=${amount}`, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+
+      // const response = await axios.get(`https://stkpush-yryy.onrender.com/stkpush?phone=${phone}&amount=${amount}`, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
 
       if (response.status === 200) {
         console.log('STK push response:', response.data);
